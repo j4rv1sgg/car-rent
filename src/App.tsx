@@ -1,11 +1,14 @@
 import { useState } from 'react'
-
+import Header from '@/components/Header'
+import { Button } from "@/components/ui/button"
 function App() {
 
   return (
-    <h1 className="text-3xl font-bold cursor-wait">
-      Hello world!
-    </h1>
+    <div>
+      <Header></Header>
+      <Button>Button</Button>
+      <h1>MAIN PAGE</h1>
+    </div>
   )
 }
 
