@@ -1,14 +1,10 @@
-import { useState } from 'react'
-import Header from '@/components/Header'
-import { Button } from "@/components/ui/button"
+import { BrowserRouter } from 'react-router-dom'
+import Router from './router/router'
 function App() {
-
   return (
-    <div>
-      <Header></Header>
-      <Button>Button</Button>
-      <h1>MAIN PAGE</h1>
-    </div>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   )
 }
 
