@@ -1,0 +1,28 @@
+# Ignore build artifacts
+build/
+dist/
+out/
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore generated files
+*.min.js
+*.min.css
+
+# Ignore coverage reports
+coverage/
+
+# Ignore configuration files
+.eslint*
+.stylelintrc*
+.prettierrc*
+*.config.js
+
+# Ignore compiled TypeScript files
+*.js
+*.d.ts
+
+# Ignore other temporary files
+*.log
+*.tmp

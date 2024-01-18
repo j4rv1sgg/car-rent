@@ -6,13 +6,13 @@ const pagesData: routerType[] = [
   {
     path: "",
     element: <Home />,
-    title: "home"
+    title: "home",
   },
   {
     path: "login",
     element: <Login />,
-    title: "login"
-  }
+    title: "login",
+  },
 ];
 
 export default pagesData;
