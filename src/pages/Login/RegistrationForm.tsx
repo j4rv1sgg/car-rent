@@ -25,8 +25,40 @@ export default function RegistrationForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof registerSchema>) {
-    console.log(values);
+  async function onSubmit() {
+    fetch("https://wyp-aut-wwsis.onrender.com/api/users", {
+      mode: 'no-cors',
+      headers: {
+        'Access-Control-Allow-Credentials': 'true'
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok. Status: ' + response.status);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+      
+  
+
+
+    // fetch('https://wyp-aut-wwsis.onrender.com/api/auth/register', {
+    //   method: 'POST',
+    //   mode: 'no-cors',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(values),
+    // })
+    //   .then(response => response.json())
+    //   .then(data => console.log(data))
+    //   .catch(error => console.error('Error:', error));
   }
 
   return (
