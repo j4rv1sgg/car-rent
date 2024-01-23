@@ -13,6 +13,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/types/user.types";
+import { PasswordInput } from "@/components/ui/password-input";
+import Cookies from "js-cookie";
 
 export default function LoginForm() {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -24,8 +26,16 @@ export default function LoginForm() {
   });
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    console.log(values);
-    
+    fetch("https://wyp-aut-wwsis.onrender.com/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => response.json())
+      .then((data) => Cookies.set("session", data.wypAutSession))
+      .catch((error) => console.error("Error:", error));
   }
 
   return (
@@ -51,7 +61,7 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Password" {...field} />
+                <PasswordInput placeholder="Password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

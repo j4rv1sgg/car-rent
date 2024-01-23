@@ -17,6 +17,10 @@ export default function Header() {
       title: "Login",
       href: "/login",
     },
+    {
+      title: "Dashboard",
+      href: "/dashboard",
+    },
   ];
 
   return (

@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { registerSchema } from "@/types/user.types";
+import { PasswordInput } from "@/components/ui/password-input";
+import Cookies from "js-cookie";
 
 export default function RegistrationForm() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -25,40 +26,17 @@ export default function RegistrationForm() {
     },
   });
 
-  async function onSubmit() {
-    fetch("https://wyp-aut-wwsis.onrender.com/api/users", {
-      mode: 'no-cors',
+  function onSubmit(values) {
+    fetch("https://wyp-aut-wwsis.onrender.com/api/auth/register", {
+      method: "POST",
       headers: {
-        'Access-Control-Allow-Credentials': 'true'
-      }
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok. Status: ' + response.status);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-      
-  
-
-
-    // fetch('https://wyp-aut-wwsis.onrender.com/api/auth/register', {
-    //   method: 'POST',
-    //   mode: 'no-cors',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(values),
-    // })
-    //   .then(response => response.json())
-    //   .then(data => console.log(data))
-    //   .catch(error => console.error('Error:', error));
+      .then((response) => response.json())
+      .then((data) => Cookies.set("session", data.wypAutSession))
+      .catch((error) => console.error("Error:", error));
   }
 
   return (
@@ -110,7 +88,7 @@ export default function RegistrationForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Password" {...field} />
+                <PasswordInput placeholder="Password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

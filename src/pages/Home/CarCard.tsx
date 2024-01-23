@@ -7,13 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
 export default function CarCard() {
+  const navigate = useNavigate();
   return (
     <Card
       className="w-[380px] h-[350px] border-4 cursor-pointer"
       onClick={() => {
-        console.log("asdf");
+        navigate("");
       }}
     >
       <CardContent>
