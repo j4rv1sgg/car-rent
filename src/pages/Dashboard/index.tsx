@@ -1,23 +1,32 @@
-import { Button } from '@/components/ui/button';
-import AuthContext from "@/context/AuthContext";
-import { checkAuth, checkAdmin } from '@/services/auth.ts'
-import Cookies from 'js-cookie';
-import { useContext } from "react";
+import { useEffect, useState } from "react";
+import { getNotAviableCarList, getAviableCarList } from "@/services/cars";
+import CarCard from "../Home/CarCard";
 
 export default function index() {
-  const { isLoggedIn, checkAuthorization } = useContext(AuthContext);
+  const [carAviableList, setAviableCarList] = useState([])
+  const [carNotAviableList, setNotAviableCarList] = useState([])
 
-  const click = () => {
-    console.log(Cookies.get('session'))
+  const setup = async () => {
+    setAviableCarList(await getAviableCarList())
+    setNotAviableCarList(await getNotAviableCarList())
 
   }
-  return (
-    <div>
-      Dashboard
+  useEffect(() => {
+    setup()
+  }, [])
 
-      <Button onClick={click}>log</Button>
-      <Button onClick={checkAuthorization}>Check session</Button>
-      <Button onClick={checkAdmin}>Check admin</Button>
+  return (
+    <div className="font-bold text-2xl">
+      <div>
+        <p>Available cars:</p>
+        {
+          carAviableList.map(car => <CarCard car={car} key={car.id} />)
+        }
+        <p>Not available cars:</p>
+        {
+          carNotAviableList.map(car => <CarCard car={car} key={car.id} />)
+        }
+      </div>
     </div>
   )
 }
