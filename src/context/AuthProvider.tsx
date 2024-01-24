@@ -1,31 +1,21 @@
 import React, { useState, useContext, useEffect } from 'react';
 import AuthContext from './AuthContext';
-import { checkAuth } from '@/services/auth';
+import Cookies from 'js-cookie';
 
 export default function AuthProvider ({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
-  const checkAuthorization = async () => {
-    try {
-      const response = await checkAuth();
-
-      if (response.status === 200) {
-        setIsLoggedIn(true);
-      } else if (response.status === 401) {
-        setIsLoggedIn(false);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+  const checkAuth = async () => {
+    setIsLoggedIn(Boolean(Cookies.get('session')))
   };
   useEffect(() => {
-    checkAuthorization()
+    checkAuth()
   }, [])
 
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, checkAuthorization }}>
+    <AuthContext.Provider value={{ isLoggedIn, checkAuth }}>
       {children}
     </AuthContext.Provider>
   );

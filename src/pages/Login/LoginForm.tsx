@@ -14,8 +14,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/types/user.types";
 import { PasswordInput } from "@/components/ui/password-input";
 import { login } from "@/services/auth";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "@/context/AuthContext";
+import { useContext } from "react";
+
 
 export default function LoginForm() {
+  const navigate = useNavigate()
+  const { checkAuth } = useContext(AuthContext)
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -26,6 +33,8 @@ export default function LoginForm() {
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
     login(values)
+    checkAuth()
+    navigate('/')
   }
 
   return (

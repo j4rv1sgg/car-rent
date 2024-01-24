@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Separator } from "./ui/separator";
 import {
   NavigationMenu,
@@ -8,25 +8,48 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import AuthContext from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
+import Cookies from "js-cookie";
+import { checkAdmin } from "@/services/auth";
 
 export default function Header() {
+
+  const navigate = useNavigate();
+
   const components: { title: string; href: string }[] = [
     {
       title: "Home",
       href: "/",
-    },
-    {
-      title: "Dashboard",
-      href: "/dashboard",
-    },
-    {
-      title: "Login",
-      href: "/login",
-    },
+    }
   ];
 
-  const {isLoggedIn} = useContext(AuthContext)
-  console.log(isLoggedIn)
+  const {isLoggedIn, checkAuth} = useContext(AuthContext)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const handleLogoutClick = () => {
+    Cookies.remove('session')
+    checkAuth()
+    navigate('/login')
+  }
+  const handleLoginClick = () => {
+    navigate('/login')
+  }
+  const showDashboard = async () => {
+    if(Cookies.get('session')){
+      const res = await checkAdmin()
+      if (res.status == 200){
+        setIsAdmin(true)
+      } else {
+        setIsAdmin(false)
+      }
+    } else {
+      return false
+    }
+  }
+
+  useEffect(() => {
+    showDashboard()
+  }, [])
 
   return (
     <div>
@@ -44,9 +67,17 @@ export default function Header() {
               </NavigationMenuItem>
             );
           })}
-          <NavigationMenuItem>
-            Logout
-          </NavigationMenuItem>
+          {isAdmin && <Button onClick={() => navigate('/dashboard')}>Dashboard</Button>}
+          {isLoggedIn ?
+            <Button onClick={handleLogoutClick}>
+              Logout
+            </Button>
+            :
+            <Button onClick={handleLoginClick}>
+              Log in
+            </Button>
+            
+          }
         </NavigationMenuList>
       </NavigationMenu>
       <Separator />

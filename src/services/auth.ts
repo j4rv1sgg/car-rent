@@ -41,8 +41,8 @@ export const checkAuth = async () => {
   return response
 }
 
-export const checkAdmin = () => {
-  fetch("https://wyp-aut-wwsis.onrender.com/api/security/checkAdmin", {
+export const checkAdmin = async () => {
+  const res = await fetch("https://wyp-aut-wwsis.onrender.com/api/security/checkAdmin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -50,5 +50,21 @@ export const checkAdmin = () => {
     body: JSON.stringify({wypAutSession: Cookies.get('session')}),
   })
     .catch((error) => console.error("Error:", error));
+  return res
+}
+
+export const logout = async () => {
+  if(Cookies.get('session') == undefined) {
+    return
+  }
+  const response = await fetch("https://wyp-aut-wwsis.onrender.com/api/auth/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({wypAutSession: Cookies.get('session')}),
+  })
+  .catch((error) => console.error("Error:", error));
+  return response
 }
 

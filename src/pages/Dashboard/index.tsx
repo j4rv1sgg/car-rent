@@ -1,13 +1,14 @@
 import { Button } from '@/components/ui/button';
 import AuthContext from "@/context/AuthContext";
 import { checkAuth, checkAdmin } from '@/services/auth.ts'
+import Cookies from 'js-cookie';
 import { useContext } from "react";
 
 export default function index() {
   const { isLoggedIn, checkAuthorization } = useContext(AuthContext);
 
   const click = () => {
-    console.log(isLoggedIn)
+    console.log(Cookies.get('session'))
 
   }
   return (
