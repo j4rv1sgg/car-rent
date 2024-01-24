@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import {useEffect, useState} from "react";
 import {getCarById} from "@/services/cars.ts";
 import {useParams} from "react-router-dom";
@@ -25,7 +24,6 @@ export default function index() {
 
   return (
     <div>
-      <Header/>
       <div className="car-details__container container">
         <div className="car-details__left">
           <img src={`https://wyp-aut-wwsis.onrender.com/api/car/${id}/image`}/>

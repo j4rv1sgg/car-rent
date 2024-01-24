@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import { Button } from '@/components/ui/button';
 import AuthContext from "@/context/AuthContext";
 import { checkAuth, checkAdmin } from '@/services/auth.ts'
@@ -13,7 +12,6 @@ export default function index() {
   }
   return (
     <div>
-      <Header/>
       Dashboard
 
       <Button onClick={click}>log</Button>
