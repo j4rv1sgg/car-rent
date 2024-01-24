@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { Separator } from "./ui/separator";
 import {
   NavigationMenu,
@@ -6,6 +7,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import AuthContext from "@/context/AuthContext";
 
 export default function Header() {
   const components: { title: string; href: string }[] = [
@@ -14,14 +16,17 @@ export default function Header() {
       href: "/",
     },
     {
-      title: "Login",
-      href: "/login",
-    },
-    {
       title: "Dashboard",
       href: "/dashboard",
     },
+    {
+      title: "Login",
+      href: "/login",
+    },
   ];
+
+  const {isLoggedIn} = useContext(AuthContext)
+  console.log(isLoggedIn)
 
   return (
     <div>
@@ -39,6 +44,9 @@ export default function Header() {
               </NavigationMenuItem>
             );
           })}
+          <NavigationMenuItem>
+            Logout
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <Separator />

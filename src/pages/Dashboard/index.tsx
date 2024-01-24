@@ -1,26 +1,24 @@
-import React from 'react'
 import Header from "@/components/Header";
 import { Button } from '@/components/ui/button';
-import Cookies from 'js-cookie';
+import AuthContext from "@/context/AuthContext";
+import { checkAuth, checkAdmin } from '@/services/auth.ts'
+import { useContext } from "react";
 
 export default function index() {
-  const checkAuth = () => {
-    console.log(Cookies.get('session'))
-    fetch("https://wyp-aut-wwsis.onrender.com/api/security/checkAuth", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({wypAutSession: Cookies.get('session')}),
-    })
-      .catch((error) => console.error("Error:", error));
+  const { isLoggedIn, checkAuthorization } = useContext(AuthContext);
+
+  const click = () => {
+    console.log(isLoggedIn)
+    
   }
   return (
     <div>
       <Header/>
       Dashboard
 
-      <Button onClick={checkAuth}>Check session</Button>
+      <Button onClick={click}>log</Button>
+      <Button onClick={checkAuthorization}>Check session</Button>
+      <Button onClick={checkAdmin}>Check admin</Button>
     </div>
   )
 }

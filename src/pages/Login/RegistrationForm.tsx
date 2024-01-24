@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { registerSchema } from "@/types/user.types";
 import { PasswordInput } from "@/components/ui/password-input";
-import Cookies from "js-cookie";
+import { register } from "@/services/auth";
 
 export default function RegistrationForm() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -26,17 +26,8 @@ export default function RegistrationForm() {
     },
   });
 
-  function onSubmit(values) {
-    fetch("https://wyp-aut-wwsis.onrender.com/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    })
-      .then((response) => response.json())
-      .then((data) => Cookies.set("session", data.wypAutSession))
-      .catch((error) => console.error("Error:", error));
+  function onSubmit(values: z.infer<typeof registerSchema>) {
+   register(values)
   }
 
   return (
