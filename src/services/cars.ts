@@ -7,3 +7,13 @@ export const getCarById = async (carId) => {
   })
   return await res.json()
 }
+
+export const getCarList = async () => {
+  const res = await fetch('https://wyp-aut-wwsis.onrender.com/api/car/carList', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  })
+  return await res.json()
+}

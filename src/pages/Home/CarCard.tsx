@@ -2,31 +2,34 @@ import React from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 
-export default function CarCard() {
+export default function CarCard({ car }) {
   const navigate = useNavigate();
+
   return (
     <Card
       className="w-[380px] h-[350px] border-4 cursor-pointer"
       onClick={() => {
-        navigate("");
+        navigate(`/car-details/${car.id}`);
       }}
     >
       <CardContent>
         <img
-          src="https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_default/v1/editorial/vhs/Mercedes-Benz-S-Class_0.png"
+          src={`https://wyp-aut-wwsis.onrender.com/api/car/${car.id}/image`}
           alt=""
         />
-        <CardTitle>Mercedes S-Class</CardTitle>
+        <CardTitle>{ car.name }</CardTitle>
       </CardContent>
       <CardFooter>
-        <p>Price: 250$/day</p>
+        <p>
+          Price: { car.price }$/day
+          <br/>
+          { car.available ? 'Available' : 'Is not available' }
+        </p>
       </CardFooter>
     </Card>
   );
