@@ -9,7 +9,7 @@ export default function index() {
 
   const click = () => {
     console.log(isLoggedIn)
-    
+
   }
   return (
     <div>
