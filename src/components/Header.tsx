@@ -21,7 +21,11 @@ export default function Header() {
     {
       title: "Home",
       href: "/",
-    }
+    },
+    {
+      title: "Profile",
+      href: "/profile",
+    },
   ];
 
   const {isLoggedIn, checkAuth} = useContext(AuthContext)
@@ -76,7 +80,7 @@ export default function Header() {
             <Button onClick={handleLoginClick}>
               Log in
             </Button>
-            
+
           }
         </NavigationMenuList>
       </NavigationMenu>

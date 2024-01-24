@@ -3,6 +3,7 @@ import Login from "@/pages/Login";
 import Home from "@/pages/Home";
 import CarDetails from "@/pages/CarDetails";
 import Dashboard from "@/pages/Dashboard";
+import Profile from "@/pages/Profile";
 
 const pagesData: routerType[] = [
   {
@@ -24,6 +25,11 @@ const pagesData: routerType[] = [
     path: "dashboard",
     element: <Dashboard />,
     title: "dashboard",
+  },
+  {
+    path: "profile",
+    element: <Profile />,
+    title: "profile",
   },
 ];
 

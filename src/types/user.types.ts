@@ -17,3 +17,12 @@ export const registerSchema = loginSchema.extend({
     message: "Surname must be at least 2 characters.",
   }),
 });
+
+export const rentSchema = z.object({
+  startDate: z.string().min(2, {
+    message: "Name must be at least 2 characters.",
+  }),
+  endDate: z.string().min(2, {
+    message: "Surname must be at least 2 characters.",
+  }),
+});

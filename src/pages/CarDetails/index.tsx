@@ -1,8 +1,21 @@
 import {useEffect, useState} from "react";
-import {getCarById} from "@/services/cars.ts";
+import {getCarById, rentCar} from "@/services/cars";
 import {useParams} from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {cn} from "@/lib/utils.ts";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form.tsx";
+import {Input} from "@/components/ui/input.tsx";
+import {useForm} from "react-hook-form";
+import {z} from "zod";
+import {rentSchema} from "@/types/user.types.ts";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 import './index.css'
 
@@ -10,8 +23,20 @@ export default function index() {
   const [car, setCar] = useState({})
   const { id } = useParams()
 
-  const onRent = () => {
+  const form = useForm<z.infer<typeof rentSchema>>({
+    resolver: zodResolver(rentSchema),
+    defaultValues: {
+      startDate: "",
+      endDate: "",
+    },
+  });
 
+  const onRent = async (values: z.infer<typeof rentSchema>) => {
+    const data = {
+      ...values,
+      carId: Number(id),
+    }
+    await rentCar(data)
   }
 
   const setup = async () => {
@@ -39,7 +64,49 @@ export default function index() {
           </div>
           <div className="car-details__description">{ car.description }</div>
 
-          <Button disabled={!car.available} onClick={onRent}>Rent</Button>
+          <Dialog>
+            <DialogTrigger>
+              <Button disabled={!car.available}>Rent</Button>
+            </DialogTrigger>
+
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Rent a car</DialogTitle>
+
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onRent)} className="space-y-8">
+                    <FormField
+                      control={form.control}
+                      name="startDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Start Date</FormLabel>
+                          <FormControl>
+                            <Input type="date" placeholder="Start Date" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="endDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>End Date</FormLabel>
+                          <FormControl>
+                            <Input type="date" placeholder="End Date" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button type="submit">Continue</Button>
+                  </form>
+                </Form>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>

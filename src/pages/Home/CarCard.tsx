@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 
-export default function CarCard({ car }) {
+export default function CarCard({ car, profile }) {
   const navigate = useNavigate();
 
   return (
@@ -28,7 +28,7 @@ export default function CarCard({ car }) {
         <p>
           Price: { car.price }$/day
           <br/>
-          { car.available ? 'Available' : 'Is not available' }
+          { !profile ? car.available ? 'Available' : 'Is not available' : '' }
         </p>
       </CardFooter>
     </Card>
