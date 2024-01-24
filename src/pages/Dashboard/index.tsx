@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getNotAviableCarList, getAviableCarList } from "@/services/cars";
 import CarCard from "../Home/CarCard";
+import CreateCarForm from "./CreateCarForm";
 
 export default function index() {
   const [carAviableList, setAviableCarList] = useState([])
@@ -16,13 +17,17 @@ export default function index() {
   }, [])
 
   return (
-    <div className="font-bold text-2xl">
+    <div>
+      <p className="font-bold text-2xl">Add car</p>
+
+      <CreateCarForm />
+
       <div>
-        <p>Available cars:</p>
+        <p className="font-bold text-2xl">Available cars:</p>
         {
           carAviableList.map(car => <CarCard car={car} key={car.id} />)
         }
-        <p>Not available cars:</p>
+        <p className="font-bold text-2xl">Not available cars:</p>
         {
           carNotAviableList.map(car => <CarCard car={car} key={car.id} />)
         }

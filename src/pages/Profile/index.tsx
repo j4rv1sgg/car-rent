@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 
-import './index.css'
 import {getCarByUser} from "@/services/cars.ts";
 import CarCard from "@/pages/Home/CarCard.tsx";
 
@@ -17,7 +16,7 @@ export default function Profile() {
 
   return (
     <div className="profile__container container">
-      <CarCard car={userCar} profile={true} />
+      {userCar?.id ? <CarCard car={userCar} profile={true} /> : 'You have no rented cars'}
     </div>
   );
 }

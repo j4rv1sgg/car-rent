@@ -25,13 +25,19 @@ export const rentCar = async (data) => {
     ...data,
     wypAutSession: Cookies.get('session')
   }
-  console.log(payload)
   await fetch('https://wyp-aut-wwsis.onrender.com/api/reservation/create', {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(payload)
+  })
+}
+
+export const addCar = async (data) => {
+  await fetch('https://wyp-aut-wwsis.onrender.com/api/car/create', {
+    method: "POST",
+    body: data
   })
 }
 

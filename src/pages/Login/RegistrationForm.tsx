@@ -14,6 +14,7 @@ import { z } from "zod";
 import { registerSchema } from "@/types/user.types";
 import { PasswordInput } from "@/components/ui/password-input";
 import { register } from "@/services/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function RegistrationForm() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -25,9 +26,10 @@ export default function RegistrationForm() {
       password: "",
     },
   });
-
+  const navigate = useNavigate();
   function onSubmit(values: z.infer<typeof registerSchema>) {
-   register(values)
+    register(values);
+    navigate('/')
   }
 
   return (
