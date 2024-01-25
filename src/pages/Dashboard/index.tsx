@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import { getNotAviableCarList, getAviableCarList } from "@/services/cars";
+import { getNotAviableCarList, getAviableCarList, getLogs } from "@/services/cars";
 import CarCard from "../Home/CarCard";
 import CreateCarForm from "./CreateCarForm";
 
 export default function index() {
   const [carAviableList, setAviableCarList] = useState([])
   const [carNotAviableList, setNotAviableCarList] = useState([])
+  const [logs, setLogs] = useState([])
 
   const setup = async () => {
     setAviableCarList(await getAviableCarList())
     setNotAviableCarList(await getNotAviableCarList())
+    setLogs(await getLogs())
 
   }
   useEffect(() => {
@@ -31,6 +33,12 @@ export default function index() {
         {
           carNotAviableList.map(car => <CarCard car={car} key={car.id} />)
         }
+      </div>
+      <div>
+        Logs:
+        {logs?.map(item => {
+          return <p>{item.timestamp} = {item.description}</p>
+        })}
       </div>
     </div>
   )

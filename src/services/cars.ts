@@ -71,3 +71,12 @@ export const getNotAviableCarList = async () => {
   })
   return await res.json()
 }
+export const getLogs = async () => {
+  const res = await fetch('https://wyp-aut-wwsis.onrender.com/api/logs', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  })
+  return await res.json()
+}
