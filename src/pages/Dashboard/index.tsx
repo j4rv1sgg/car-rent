@@ -19,7 +19,7 @@ export default function index() {
   }, [])
 
   return (
-    <div>
+    <div className="ml-10">
       <p className="font-bold text-2xl">Add car</p>
 
       <CreateCarForm />
@@ -37,7 +37,7 @@ export default function index() {
       <div>
         Logs:
         {logs?.map(item => {
-          return <p>{item.timestamp} = {item.description}</p>
+          return <p>{item.timeStamp} = {item.description}</p>
         })}
       </div>
     </div>
