@@ -19,8 +19,20 @@ import {zodResolver} from "@hookform/resolvers/zod";
 
 import './index.css'
 
+interface Car {
+  price: number;
+  name: string;
+  description: string;
+  available: boolean;
+}
+
 export default function index() {
-  const [car, setCar] = useState({})
+  const [car, setCar] = useState<Car>({
+    price: 0,
+    name: '',
+    description: '',
+    available: false
+  });
   const { id } = useParams()
 
   const form = useForm<z.infer<typeof rentSchema>>({

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import AuthContext from './AuthContext';
 import Cookies from 'js-cookie';
 

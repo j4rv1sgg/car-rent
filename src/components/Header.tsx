@@ -27,7 +27,7 @@ export default function Header() {
       href: "/profile",
     },
   ];
-
+  
   const {isLoggedIn, checkAuth} = useContext(AuthContext)
   const [isAdmin, setIsAdmin] = useState(false)
   const handleLogoutClick = () => {
@@ -41,7 +41,7 @@ export default function Header() {
   const showDashboard = async () => {
     if(Cookies.get('session')){
       const res = await checkAdmin()
-      if (res.status == 200){
+      if (res?.status == 200){
         setIsAdmin(true)
       } else {
         setIsAdmin(false)
